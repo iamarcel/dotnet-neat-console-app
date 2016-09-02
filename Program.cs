@@ -13,20 +13,23 @@ namespace ConsoleApplication
             app.Name = "ninja";
             app.HelpOption("-?|-h|--help");
 
-            app.OnExecute(() => {
+            app.OnExecute(() =>
+                {
                     Console.WriteLine("Hello World!");
                     return 0;
                 });
 
-            app.Command("hide", (command) => {
+            app.Command("hide", (command) =>
+                {
 
                     command.Description = "Instruct the ninja to hide in a specific location.";
                     command.HelpOption("-?|-h|--help");
 
                     var locationArgument = command.Argument("[location]",
-                                                            "Where the ninja should hide.");
+                                               "Where the ninja should hide.");
 
-                    command.OnExecute(() => {
+                    command.OnExecute(() =>
+                        {
                             var location = locationArgument.Value != null
                               ? locationArgument.Value
                               : "in a trash can";
@@ -37,31 +40,34 @@ namespace ConsoleApplication
 
                 });
 
-            app.Command("attack", (command) => {
-
+            app.Command("attack", (command) =>
+                {
                     command.Description = "Instruct the ninja to go and attack!";
                     command.HelpOption("-?|-h|--help");
 
                     var excludeOption = command.Option("-e|--exclude <exclusions>",
-                                                       "Things to exclude while attacking.",
-                                                       CommandOptionType.MultipleValue);
+                                            "Things to exclude while attacking.",
+                                            CommandOptionType.MultipleValue);
 
                     var screamOption = command.Option("-s|--scream",
-                                                      "Scream while attacking",
-                                                      CommandOptionType.NoValue);
+                                           "Scream while attacking",
+                                           CommandOptionType.NoValue);
 
-                    command.OnExecute(() => {
+                    command.OnExecute(() =>
+                        {
                             var exclusions = excludeOption.Values;
-                            var attacking = (new List<string> {
+                            var attacking = (new List<string>
+                            {
                                 "dragons",
                                 "badguys",
                                 "civilians",
                                 "animals"
-                                }).Where(x => !exclusions.Contains(x));
+                            }).Where(x => !exclusions.Contains(x));
 
                             Console.Write("Ninja is attacking " + string.Join(", ", attacking));
 
-                            if (screamOption.HasValue()) {
+                            if (screamOption.HasValue())
+                            {
                                 Console.Write(" while screaming");
                             }
 
@@ -70,7 +76,6 @@ namespace ConsoleApplication
                             return 0;
 
                         });
-
                 });
 
             app.Execute(args);
